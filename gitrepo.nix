@@ -1,7 +1,7 @@
+{
 # The functions below are GitRepo functions
 
-# In this case the value of the geGitHubRepo is an object containing two fields
-  getGitHubRepo = { 
+  getGitHubRepo = { # In this case the value of the geGitHubRepo is an object containing two fields
     orgName = "metacraft-labs";
     repoName = "$(basename $(git rev-parse --show-toplevel))";
   };
@@ -69,4 +69,4 @@
     message_of_third_commit = "$(git log -1 --format='%s' $(commit_three_hash))";
     message_of_fourth_commit = "$(git log -1 --format='%s' $(commit_four_hash))";
   };
-
+}

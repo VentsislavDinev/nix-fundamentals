@@ -1,29 +1,29 @@
 # fundamentals.nix
-let
-  GitRepo = {
+let 
+  GitRepo = { ## Define a set of attributes for a Git repository.
     url,
     auth,
     path,
-  }: {inherit url auth path;};
-  Commit = {
+  }: {inherit url auth path;}; ## Inherit attributes from the argument list.
+  Commit = { ## Define a set of attributes for a commit.
     hash,
     message,
     author,
     timestamp,
     files,
-  }: {inherit hash message author timestamp files;};
+  }: {inherit hash message author timestamp files;}; ## Inherit attributes from the argument list.
   Timestamp = 1;
   Hash = "abcdef123456";
   UserInfo = {
     name ? "john",
     email ? "john@john.com",
-  }: {inherit name email;};
+  }: {inherit name email;}; ## Inherit attributes from the argument list.
   Tag = {
     name ? UserInfo.name,
     commit ? Commit,
     tagger ? UserInfo,
     date ? Timestamp,
-  }: {inherit name commit tagger date;};
+  }: {inherit name commit tagger date;}; ## Inherit attributes from the argument list.
   MermaidDiagram = "some_string";
   # extractAttributes = builtins.fetchGit {
   #   url = "";
@@ -31,7 +31,7 @@ let
   #   rev = "";
   # };
 in {
-  inherit
+  inherit ## Inherit attributes defined above.
     # extractAttributes
     GitRepo
     Commit
@@ -43,18 +43,3 @@ in {
     ;
 }
 
-#GitRepo functions
-
-#* getGitHubRepo :: { orgName: string, repoName: string } -> GitRepo 
-#* getBranches :: (repo: GitRepo) → [ string ] 
-#* getCommits :: (repo: GitRepo) → (branchName: string) → [ Commit ] 
-#* getTags :: (repo: GitRepo) → [ Tag ] 
-#* generateMermaidVisualization :: GitRepo → MermaidDiagram 
-
-#Commit functions
-
-#* getCommitHash :: Commit → Hash 
-#* getParentCommits :: Commit → [ Commit ] 
-#* getAuthor :: Commit → UserInfo 
-#* getCommitter :: Commit → UserInfo 
-#* getMessage :: Commit → { title: string, body: string } 
