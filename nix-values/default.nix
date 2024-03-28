@@ -1,14 +1,17 @@
-rec {
+let
+values = rec {
   path = ./string.nix;
-  value = import string.nix;
+  value = import ./string.nix;
   type = "string";
   checkFunction = value: value ? "type" && value.type == "string";
   isCorrect = checkFunction value;
-}
+};
+in
+values
 
 rec {
   path = ./integer.nix;
-  value = import integer.nix;
+  value = import ./integer.nix;
   type = "integer";
   checkFunction = value: value ? "type" && value.type == "integer";
   isCorrect = checkFunction value;
@@ -24,7 +27,7 @@ rec {
 
 rec {
   path = ./path.nix;
-  value = import path.nix;
+  value = import ./path.nix;
   type = "path";
   checkFunction = value: value ? "type" && value.type == "path";
   isCorrect = checkFunction value;
