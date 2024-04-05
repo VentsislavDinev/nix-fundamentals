@@ -1,21 +1,18 @@
-rec {
+rec
+{
   stringValues = rec {
     path = ./string.nix;
     value = import ./string.nix;
     type = "string";
     checkFunction = builtins.isString;
     isCorrect = checkFunction value;
-    isAlsoCorrect =
-      if (builtins.isString value)
-      then "yes"
-      else "no";
   };
 
   integerValues = rec {
     path = ./integer.nix;
     value = import ./integer.nix;
     type = "integer";
-    checkFunction = value: type.isInt value;
+    checkFunction = builtins.isInt;
     isCorrect = checkFunction value;
   };
 
@@ -23,7 +20,7 @@ rec {
     path = ./boolean.nix;
     value = import ./boolean.nix;
     type = "boolean";
-    checkFunction = value: value == true || value == false;
+    checkFunction = builtins.isBool;
     isCorrect = checkFunction value;
   };
 
@@ -31,7 +28,7 @@ rec {
     path = ./path.nix;
     value = import ./path.nix;
     type = "path";
-    checkFunction = value: type.isPath value;
+    checkFunction = builtins.isPath;
     isCorrect = checkFunction value;
   };
 
@@ -39,7 +36,7 @@ rec {
     path = ./null.nix;
     value = import ./null.nix;
     type = "null";
-    checkFunction = value: type.isNull value;
+    checkFunction = isNull;
     isCorrect = checkFunction value;
   };
 
@@ -47,7 +44,7 @@ rec {
     path = ./list.nix;
     value = import ./list.nix;
     type = "list";
-    checkFunction = value: type.isList value;
+    checkFunction = builtins.isList;
     isCorrect = checkFunction value;
   };
 
@@ -55,7 +52,8 @@ rec {
     path = ./attribute-set.nix;
     value = import ./attribute-set.nix;
     type = "set";
-    checkFunction = value: type.isAttrs value;
+    checkFunction = builtins.isBool;
+
     isCorrect = checkFunction value;
   };
 
@@ -63,15 +61,15 @@ rec {
     path = ./function.nix;
     value = import ./function.nix;
     type = "function";
-    checkFunction = value: type.isFunction value;
+    checkFunction = builtins.isFunction;
     isCorrect = checkFunction value;
   };
 
-  derivationValues = rec {
+  derivationValues = {lib}: rec {
     path = ./derivation.nix;
     value = import ./derivation.nix;
     type = "derivation";
-    checkFunction = value: value ? "type" && value.type == "derivation";
+    checkFunction = value: lib.isDerivation value;
     isCorrect = checkFunction value;
   };
 }
