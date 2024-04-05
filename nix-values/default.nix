@@ -5,7 +5,7 @@ rec {
     type = "string";
     checkFunction = builtins.isString;
     isCorrect = checkFunction value;
-    isReallyCorrect =
+    isAlsoCorrect =
       if (builtins.isString value)
       then "yes"
       else "no";
