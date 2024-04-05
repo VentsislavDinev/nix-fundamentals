@@ -1,74 +1,77 @@
-let
-values = rec {
-  path = ./string.nix;
-  value = import ./string.nix;
-  type = "string";
-  checkFunction = value: value ? "type" && value.type == "string";
-  isCorrect = checkFunction value;
-};
-in
-values
-
 rec {
-  path = ./integer.nix;
-  value = import ./integer.nix;
-  type = "integer";
-  checkFunction = value: value ? "type" && value.type == "integer";
-  isCorrect = checkFunction value;
-}
+  stringValues = rec {
+    path = ./string.nix;
+    value = import ./string.nix;
+    type = "string";
+    checkFunction = builtins.isString;
+    isCorrect = checkFunction value;
+    isReallyCorrect =
+      if (builtins.isString value)
+      then "yes"
+      else "no";
+  };
 
-rec {
-  path = ./boolean.nix;
-  value = import ./boolean.nix;
-  type = "boolean";
-  checkFunction = value: value ? "type" && value.type == "boolean";
-  isCorrect = checkFunction value;
-}
+  integerValues = rec {
+    path = ./integer.nix;
+    value = import ./integer.nix;
+    type = "integer";
+    checkFunction = value: type.isInt value;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./path.nix;
-  value = import ./path.nix;
-  type = "path";
-  checkFunction = value: value ? "type" && value.type == "path";
-  isCorrect = checkFunction value;
-}
+  booleanValues = rec {
+    path = ./boolean.nix;
+    value = import ./boolean.nix;
+    type = "boolean";
+    checkFunction = value: value == true || value == false;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./null.nix;
-  value = import ./null.nix;
-  type = "null";
-  checkFunction = value: value ? "type" && value.type == "null";
-  isCorrect = checkFunction value;
-}
+  pathValues = rec {
+    path = ./path.nix;
+    value = import ./path.nix;
+    type = "path";
+    checkFunction = value: type.isPath value;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./list.nix;
-  value = import ./list.nix;
-  type = "list";
-  checkFunction = value: value ? "type" && value.type == "list";
-  isCorrect = checkFunction value;
-}
+  nullValues = rec {
+    path = ./null.nix;
+    value = import ./null.nix;
+    type = "null";
+    checkFunction = value: type.isNull value;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./attribute_set.nix;
-  value = import ./attribute_set.nix;
-  type = "set";
-  checkFunction = value: value ? "type" && value.type == "set";
-  isCorrect = checkFunction value;
-}
+  listValues = rec {
+    path = ./list.nix;
+    value = import ./list.nix;
+    type = "list";
+    checkFunction = value: type.isList value;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./function.nix;
-  value = import ./function.nix;
-  type = "function";
-  checkFunction = value: value ? "type" && value.type == "function";
-  isCorrect = checkFunction value;
-}
+  attribute_setValues = rec {
+    path = ./attribute-set.nix;
+    value = import ./attribute-set.nix;
+    type = "set";
+    checkFunction = value: type.isAttrs value;
+    isCorrect = checkFunction value;
+  };
 
-rec {
-  path = ./derivation.nix;
-  value = import ./derivation.nix;
-  type = "derivation";
-  checkFunction = value: value ? "type" && value.type == "derivation";
-  isCorrect = checkFunction value;
+  functionValues = rec {
+    path = ./function.nix;
+    value = import ./function.nix;
+    type = "function";
+    checkFunction = value: type.isFunction value;
+    isCorrect = checkFunction value;
+  };
+
+  derivationValues = rec {
+    path = ./derivation.nix;
+    value = import ./derivation.nix;
+    type = "derivation";
+    checkFunction = value: value ? "type" && value.type == "derivation";
+    isCorrect = checkFunction value;
+  };
 }
