@@ -52,8 +52,8 @@ rec
     path = ./attribute-set.nix;
     value = import ./attribute-set.nix;
     type = "set";
-    #checkFunction = builtins.isAttrs;
-    #isCorrect = checkFunction value;
+    checkFunction = builtins.isAttrs;
+    isCorrect = checkFunction value;
   };
 
   functionValues = rec {
@@ -84,8 +84,8 @@ rec
     path = ./task.nix;
     value = import ./task.nix;
     type = "set";
-    #checkFunction = builtins.isAttrs;
-    #isCorrect = checkFunction value;
+    checkFunction = builtins.isAttrs;
+    isCorrect = checkFunction value;
   };
 }
 
