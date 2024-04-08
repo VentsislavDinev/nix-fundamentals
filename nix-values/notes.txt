@@ -1,0 +1,11 @@
+## We see a library from which several built-in functions derived and whose parameters are being inherited, is that correct?
+
+## We see a defaultArgReducer function with conditional construction.
+## This function reads a list, and if it is, then concatenate it to string.
+## And if it is not a list then it converts it to string.
+
+## The defaultPathReducer is a function concatenates strings to arguments with double dash
+## The dotPathReducer is a function concatenates strings to arguments with a dot.
+
+## The defaultArgFormatter is an attribute set with several parameteres, the last two of which call two functions accordingly.
+

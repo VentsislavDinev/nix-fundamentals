@@ -79,6 +79,13 @@ rec
     checkFunction = builtins.isAttrs;
     isCorrect = checkFunction value;
   };
-}
 
+    task_attribute_setValues = rec {
+    path = ./task.nix;
+    value = import ./task.nix;
+    type = "set";
+    #checkFunction = builtins.isAttrs;
+    #isCorrect = checkFunction value;
+  };
+}
 
