@@ -52,9 +52,8 @@ rec
     path = ./attribute-set.nix;
     value = import ./attribute-set.nix;
     type = "set";
-    checkFunction = builtins.isBool;
-
-    isCorrect = checkFunction value;
+    #checkFunction = builtins.isAttrs;
+    #isCorrect = checkFunction value;
   };
 
   functionValues = rec {
@@ -72,4 +71,14 @@ rec
     checkFunction = value: lib.isDerivation value;
     isCorrect = checkFunction value;
   };
+
+    special_attribute_setValues = rec {
+    path = ./special.nix;
+    value = import ./special.nix;
+    type = "set";
+    checkFunction = builtins.isAttrs;
+    isCorrect = checkFunction value;
+  };
 }
+
+
